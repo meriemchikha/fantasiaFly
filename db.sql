@@ -39,7 +39,6 @@ create table booking(
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
--- Pour MySQL
 INSERT INTO booking (booking_date, cancellation_insurance, id_payment, id_user, id_travel)
 VALUES
 ('2024-02-14', true, 1, 1, 1),
@@ -60,7 +59,6 @@ create table travel(
     nb_of_total_seats INT
 );
 
--- Pour MySQL
 INSERT INTO travel (destination_name, destination_description, nb_of_total_seats)
 VALUES
 ('Paris Trip', 'Explore the beautiful city of Paris with its iconic landmarks.', 50),
@@ -80,7 +78,7 @@ create table payment(
     sum DECIMAL(10,2) NOT NULL
 );
 
--- Pour MySQL
+
 INSERT INTO payment (payment_date, sum)
 VALUES
 ('2024-02-14', 150.75),
@@ -122,7 +120,7 @@ create table travel_period(
     CONSTRAINT fk_period_travel FOREIGN KEY (id_period) REFERENCES period(id),
     type_transport varchar(50)
 );
--- Pour MySQL
+ 
 INSERT INTO travel_period (id_travel, id_period, type_transport)
 VALUES
 (1, 1, 'Train'),
