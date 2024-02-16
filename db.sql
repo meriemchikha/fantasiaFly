@@ -139,7 +139,7 @@ VALUES
 
 SELECT 
     id,
-    payment_date
+    payment_date,
     unit_price,
     quantity,
     unit_price * quantity AS product
@@ -157,7 +157,7 @@ FROM
     travel.destination_name,
     payment.id AS payment_id,
     payment.payment_date,
-    payment.price * payment.quantity AS total_price
+    payment.unit_price * payment.quantity AS total_price
 FROM
 booking
 INNER JOIN user ON booking.id_user = user.id

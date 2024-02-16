@@ -14,7 +14,7 @@ router.get("/users/:id", userController.getUserById);
 // router.post("/users", userController.addNewUser);
 router.put("/users", userController.updateUser);
 router.delete("/users/:id", userController.deleteUser);
-router.get("/usersBoks/:id", userController.getUserbokById);
+
 
 // route user pour hasher le mot de passe
 router.post("/users", hashPassword, userController.addNewUser);
@@ -29,6 +29,11 @@ router.get("/payments-bookings/:id", paymentController.getPaymentBookingById);
 
 //creer les travels
 router.get("/travels", travelController.getTravel);
-router.put
+
+
+// les des jointures
+router.get("/usersBoks/:id", userController.getUserbokById);
+router.get("/facture", bookingController.getAllInfo)
+
 
 module.exports = router;
