@@ -4,7 +4,7 @@ create table user(
     lastname varchar(50),
     birth_date Date,
     email varchar(50),
-    password varchar(50),
+    hashedpassword varchar(50),
     phone_number varchar(10),
     address varchar(50),
     postal_code varchar(50),
@@ -25,19 +25,26 @@ VALUES
     ('Hugo', 'Bertrand', '1983-10-15', 'hugo.bertrand@email.com', 'motdepasse9', '0567890123', '456 Avenue du Bonheur', '59000', 'Lille', 'France'),
     ('Chloé', 'Moreau', '1996-08-28', 'chloe.moreau@email.com', 'motdepasse10', '0890123456', '789 Rue de la Sérénité', '69004', 'Lyon', 'France');
 
-create table booking(
+
+
+CREATE TABLE booking (
     id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    booking_date Date,
-    cancellation_insurance Boolean,
+    booking_date DATE,
+    cancellation_insurance BOOLEAN,
     id_payment INT,
-    CONSTRAINT fk_booking_payment FOREIGN KEY (id_payment) REFERENCES payment(id),
     id_user INT,
-    CONSTRAINT fk_booking_user FOREIGN KEY (id_user) REFERENCES user(id),
     id_travel INT,
+    id_period INT,
+    id_travel_period INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT fk_booking_payment FOREIGN KEY (id_payment) REFERENCES payment(id),
+    CONSTRAINT fk_booking_user FOREIGN KEY (id_user) REFERENCES user(id),
     CONSTRAINT fk_booking_travel FOREIGN KEY (id_travel) REFERENCES travel(id),
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    CONSTRAINT fk_booking_period FOREIGN KEY (id_period) REFERENCES period(id),
+    CONSTRAINT fk_booking_travel_period FOREIGN KEY (id_travel_period) REFERENCES travel_period(id)
 );
+
 
 INSERT INTO booking (booking_date, cancellation_insurance, id_payment, id_user, id_travel)
 VALUES
@@ -72,25 +79,35 @@ VALUES
 ('Provence Lavender Fields', 'Wander through the picturesque lavender fields of Provence.', 20),
 ('French Riviera Yachting', 'Luxuriate in the glamour of the French Riviera with a private yachting experience.', 15);
 
+
 create table payment(
     id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     payment_date Date,
-    sum DECIMAL(10,2) NOT NULL
+    unit_price DECIMAL(10,2),
+    quantity TINYINT CHECK (quantity > 0 AND quantity <= 10);
 );
 
+SELECT 
+    id,
+    payment_date
+    unit_price,
+    quantity,
+    unit_price * quantity AS product
+FROM 
+    payment;
 
-INSERT INTO payment (payment_date, sum)
+INSERT INTO payment (payment_date, unit_price, quantity)
 VALUES
-('2024-02-14', 150.75),
-('2024-02-15', 200.50),
-('2024-02-16', 75.25),
-('2024-02-17', 120.00),
-('2024-02-18', 90.30),
-('2024-02-19', 180.85),
-('2024-02-20', 100.00),
-('2024-02-21', 160.45),
-('2024-02-22', 130.20),
-('2024-02-23', 220.75);
+('2024-02-14', 120.00, 3),
+('2024-02-15', 120.00, 2),
+('2024-02-16', 120.00, 1),
+('2024-02-17', 400.75, 2),
+('2024-02-18', 225.99, 4),
+('2024-02-19', 180.85, 1),
+('2024-02-20', 100.00, 9),
+('2024-02-21', 160.45, 3),
+('2024-02-22', 130.20, 1),
+('2024-02-23', 220.75, 2);
 
 create table period(
     id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -114,6 +131,7 @@ VALUES
 ('2024-12-05', '2024-12-12', 7, 1400.00);
 
 create table travel_period(
+     id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     id_travel INT,
     CONSTRAINT fk_travel_period FOREIGN KEY (id_travel) REFERENCES travel(id),
     id_period INT,
@@ -133,3 +151,81 @@ VALUES
 (8, 8, 'Flight'),
 (9, 9, 'Car'),
 (10, 10, 'Train');
+
+/*jointure booking*/
+SELECT
+    booking.id AS booking_id,
+    booking.booking_date,
+    booking.cancellation_insurance,
+    user.id AS user_id,
+    user.firstname,
+    user.lastname,
+    user.birth_date,
+    user.email,
+    user.phone_number,
+    user.address,
+    user.postal_code,
+    user.city,
+    user.country,
+    travel.id AS travel_id,
+    travel.destination_name,
+    travel.destination_description,
+    travel.nb_of_total_seats,
+    payment.id AS payment_id,
+    payment.payment_date,
+    payment.sum
+FROM
+    b
+SELECT
+    booking.id AS booking_id,
+    booking.booking_date,
+    booking.cancellation_insurance,
+    user.id AS user_id,
+    user.firstname,
+    user.lastname,
+    user.birth_date,
+    user.email,
+    user.phone_number,
+    user.address,
+    user.postal_code,
+    user.city,
+    user.country,
+    travel.id AS travel_id,
+    travel.destination_name,
+    travel.destination_description,
+    travel.nb_of_total_seats,
+    payment.id AS payment_id,
+    payment.payment_date,
+    payment.sum
+FROM
+booking
+INNER JOIN user ON booking.id_user = user.id
+INNER JOIN travel ON booking.id_travel = travel.id
+INNER JOIN payment ON booking.id_payment = payment.id;
+
+
+SELECT 
+    id,
+    payment_date
+    unit_price,
+    quantity,
+    unit_price * quantity AS product
+FROM 
+    payment;
+
+    SELECT
+    booking.id AS booking_id,
+    booking.booking_date,
+    user.id AS user_id,
+    user.lastname,
+    user.firstname,
+    travel.id AS travel_id,
+    travel.destination_name,
+    payment.id AS payment_id,
+    payment.payment_date,
+    payment.price * payment.quantity AS total_price
+FROM
+booking
+INNER JOIN user ON booking.id_user = user.id
+INNER JOIN travel ON booking.id_travel = travel.id
+INNER JOIN payment ON booking.id_payment = payment.id;

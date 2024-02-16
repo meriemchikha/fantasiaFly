@@ -1,6 +1,8 @@
 //importer variable env
 require("dotenv").config();
 
+const { hashPassword } = require("./middlewares/hashPassword");
+
 //importer express
 const express = require("express");
 //importer router
