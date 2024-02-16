@@ -139,7 +139,7 @@ VALUES
 
 SELECT 
     id,
-    payment_date,
+    payment_date
     unit_price,
     quantity,
     unit_price * quantity AS product
@@ -147,7 +147,7 @@ FROM
     payment;
 
 
-   SELECT
+    SELECT
     booking.id AS booking_id,
     booking.booking_date,
     user.id AS user_id,
@@ -162,19 +162,4 @@ FROM
 booking
 INNER JOIN user ON booking.id_user = user.id
 INNER JOIN travel ON booking.id_travel = travel.id
-INNER JOIN payment ON booking.id_payment = payment.id
-INNER JOIN travel_period ON period.id
-
-//
-
-SELECT u.id, u.firstname, u.lastname, u.email, u.phone_number, t.destination_name, tp.type_transport, DATE_FORMAT(pr.date_departure, '%d-%m-%y') AS formatted_date_departure, DATE_FORMAT(pr.date_return, '%d-%m-%y') AS formatted_date_return, DATE_FORMAT(b.booking_date, '%d-%m-%y') AS formatted_booking_date, p.unit_price, p.quantity, p.unit_price * p.quantity AS total_price
-FROM booking as b
-JOIN travel AS t ON t.id = b.id_travel
-JOIN travel_period AS tp ON t.id = tp.id_travel
-JOIN period AS pr ON tp.id_period = pr.id
-JOIN user AS u ON u.id = b.id_user
-JOIN payment AS p ON b.id_payment = p.id;
-
-DATE_FORMAT(pr.date_departure, '%Y-%m-%d') AS formatted_date_departure,
-DATE_FORMAT(pr.date_return, '%Y-%m-%d') AS formatted_date_return,
-DATE_FORMAT(b.booking_date, 'Y-%m-%d') AS formatted_booking_date,
+INNER JOIN payment ON booking.id_payment = payment.id;
