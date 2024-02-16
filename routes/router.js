@@ -33,7 +33,8 @@ router.get("/travels", travelController.getTravel);
 
 // les des jointures
 router.get("/usersBoks/:id", userController.getUserbokById);
-router.get("/facture", bookingController.getAllInfo)
+router.get("/facture", bookingController.getAllInfo);
+router.get("/facture/:id", bookingController.getFactureById);
 
 
 module.exports = router;

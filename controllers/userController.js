@@ -10,7 +10,7 @@ const userController = {
             const {id} = req.params;
             const [result] = await userModel.queryGetUserById(id);
 
-    if (result != null) {
+    if (result[0] != null) {
             res.json(result);
         } else {
             res.status(401).send("user does not exist");
