@@ -4,26 +4,26 @@ create table user(
     lastname varchar(50),
     birth_date Date,
     email varchar(50),
-    password varchar(50),
-    phone_number varchar(10),
+    hashPassword varchar(50),
+   
     address varchar(50),
     postal_code varchar(50),
     city varchar(150),
     country varchar(50)
 );
 
- INSERT INTO user (firstname, lastname, birth_date, email, password, phone_number, address, postal_code, city, country)
+ INSERT INTO user (firstname, lastname, birth_date, email, hashpassword, phone_number, address, postal_code, city, country)
 VALUES
-    ( 'Jean', 'Dupont', '1980-03-12', 'jean.dupont@example.com', 'motdepasse1', '0612345678', '12 Rue de la République', '75001', 'Paris', 'France'),
-    ('Marie', 'Martin', '1985-08-22', 'marie.martin@email.com', 'motdepasse2', '0987654321', '456 Avenue des Roses', '69002', 'Lyon', 'France'),
-    ('Pierre', 'Lefevre', '1993-02-10', 'pierre.lefevre@email.com', 'motdepasse3', '0654321098', '789 Boulevard du Soleil', '31000', 'Toulouse', 'France'),
-    ('Sophie', 'Robert', '1980-11-28', 'sophie.robert@email.com', 'motdepasse4', '0231547698', '101 Rue de beavisage', '44000', 'Nantes', 'France'),
-    ('Thomas', 'Dubois', '1998-09-03', 'thomas.dubois@email.com', 'motdepasse5', '0765432189', '202 Chemin de la Paix', '33000', 'Bordeaux', 'France'),
- ('Emma', 'Garcia', '1995-04-20', 'emma.garcia@email.com', 'motdepasse6', '0345678901', '567 Avenue de la Joie', '13001', 'Marseille', 'France'),
-    ('Louis', 'Fournier', '1987-07-12', 'louis.fournier@email.com', 'motdepasse7', '0789012345', '890 Boulevard de saul santé', '69003', 'Lyon', 'France'),
-    ('Camille', 'Dumas', '1992-01-05', 'camille.dumas@email.com', 'motdepasse8', '0123456789', '123 Rue de la lune', '75002', 'Paris', 'France'),
-    ('Hugo', 'Bertrand', '1983-10-15', 'hugo.bertrand@email.com', 'motdepasse9', '0567890123', '456 Avenue du Bonheur', '59000', 'Lille', 'France'),
-    ('Chloé', 'Moreau', '1996-08-28', 'chloe.moreau@email.com', 'motdepasse10', '0890123456', '789 Rue de la Sérénité', '69004', 'Lyon', 'France');
+    ( 'Jean', 'Dupont', '1980-03-12', 'jean.dupont@example.com', 'M0tDeP@ss', '0612345678', '12 Rue de la République', '75001', 'Paris', 'France'),
+    ('Marie', 'Martin', '1985-08-22', 'marie.martin@email.com', 'S3cur!téP@ss', '0987654321', '456 Avenue des Roses', '69002', 'Lyon', 'France'),
+    ('Pierre', 'Lefevre', '1993-02-10', 'pierre.lefevre@email.com', 'Ch@ng3M0tDeP@ss', '0654321098', '789 Boulevard du Soleil', '31000', 'Toulouse', 'France'),
+    ('Sophie', 'Robert', '1980-11-28', 'sophie.robert@email.com', 'P@ssw0rd123', '0231547698', '101 Rue de beavisage', '44000', 'Nantes', 'France'),
+    ('Thomas', 'Dubois', '1998-09-03', 'thomas.dubois@email.com', 'C0mpl3xP@ss!', '0765432189', '202 Chemin de la Paix', '33000', 'Bordeaux', 'France'),
+ ('Emma', 'Garcia', '1995-04-20', 'emma.garcia@email.com', 'SécuR!téP@ss789', '0345678901', '567 Avenue de la Joie', '13001', 'Marseille', 'France'),
+    ('Louis', 'Fournier', '1987-07-12', 'louis.fournier@email.com', 'P@ssw0rd!nCrYpt3d', '0789012345', '890 Boulevard de saul santé', '69003', 'Lyon', 'France'),
+    ('Camille', 'Dumas', '1992-01-05', 'camille.dumas@email.com', 'C0d3S3cur!téXYZ', '0123456789', '123 Rue de la lune', '75002', 'Paris', 'France'),
+    ('Hugo', 'Bertrand', '1983-10-15', 'hugo.bertrand@email.com', 'Ex@mpleP@ssw0rd', '0567890123', '456 Avenue du Bonheur', '59000', 'Lille', 'France'),
+    ('Chloé', 'Moreau', '1996-08-28', 'chloe.moreau@email.com', 'M0t2P@ssCh@ll3ng3', '0890123456', '789 Rue de la Sérénité', '69004', 'Lyon', 'France');
 
 create table booking(
     id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -75,22 +75,23 @@ VALUES
 create table payment(
     id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     payment_date Date,
-    sum DECIMAL(10,2) NOT NULL
+    unit_price DECIMAL(10,2),
+    quantity TINYINT CHECK (quantity > 0 AND quantity <= 10);
 );
 
 
-INSERT INTO payment (payment_date, sum)
+INSERT INTO payment (payment_date, unit_price, quantity)
 VALUES
-('2024-02-14', 150.75),
-('2024-02-15', 200.50),
-('2024-02-16', 75.25),
-('2024-02-17', 120.00),
-('2024-02-18', 90.30),
-('2024-02-19', 180.85),
-('2024-02-20', 100.00),
-('2024-02-21', 160.45),
-('2024-02-22', 130.20),
-('2024-02-23', 220.75);
+('2024-02-14', 150.75, 3),
+('2024-02-15', 200.50, 2),
+('2024-02-16', 75.25, 1), 
+('2024-02-17', 120.00, 2), 
+('2024-02-18', 90.30, 4), 
+('2024-02-19', 180.85, 1), 
+('2024-02-20', 100.00, 6), 
+('2024-02-21', 160.45, 2),
+('2024-02-22', 130.20, 1), 
+('2024-02-23', 220.75, 3) 
 
 create table period(
     id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -133,3 +134,32 @@ VALUES
 (8, 8, 'Flight'),
 (9, 9, 'Car'),
 (10, 10, 'Train');
+
+
+
+SELECT 
+    id,
+    payment_date
+    unit_price,
+    quantity,
+    unit_price * quantity AS product
+FROM 
+    payment;
+
+
+    SELECT
+    booking.id AS booking_id,
+    booking.booking_date,
+    user.id AS user_id,
+    user.lastname,
+    user.firstname,
+    travel.id AS travel_id,
+    travel.destination_name,
+    payment.id AS payment_id,
+    payment.payment_date,
+    payment.price * payment.quantity AS total_price
+FROM
+booking
+INNER JOIN user ON booking.id_user = user.id
+INNER JOIN travel ON booking.id_travel = travel.id
+INNER JOIN payment ON booking.id_payment = payment.id;

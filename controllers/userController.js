@@ -21,17 +21,17 @@ const userController = {
     },
     addNewUser : async (req, res) => {
         try{
-          const user = req.body;
-          const [result] = await userModel.queryAddNewUser(user);
-        if (result.affectedRows) {
-        res.send(`User created by id : ${result.insertId}`);
-      } else {
-        res.status(401).send("Impossible to add new user");
-      }
-    } catch (error) {
-      res.status(500).send(error);
+          const { firstname, lastname, birth_date, email, phone_number, address, postal_code, city, country, hashPassword} = req.body;
+          const [result] = await userModel.queryAddNewUser(firstname, lastname, birth_date, email,  phone_number, address, postal_code, city, country, hashPassword);
+        if (!result.affectedRows) {
+      res.send("erreur lors de l'enregistrement de user ");
+    } else {
+      res.send("created");
     }
-  },
+  } catch (error) {
+    res.status(500).send(error);
+  }},
+
   updateUser: async (req,res) => {
     try {
         const { firstname, lastname, birth_date, password, phone_number, address, postal_code, city, country, email} = req.body;

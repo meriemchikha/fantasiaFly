@@ -2,13 +2,13 @@ const fantasia = require("../database");
 
 const userModel = {
     queryGetAllUsers : () => {
-    return fantasia.query("select * from user");
+    return fantasia.query("select firstname, lastname, birth_date, email, phone_number, address, postal_code, city, country from user");
 },
 queryGetUserById : (id) =>{
     return fantasia.query(`select *from user where id = ${id}`);
 },
-queryAddNewUser : ({firstname, lastname, birth_date, email, password, phone_number, address, postal_code, city, country }) => {
-    return fantasia.query("insert into user (firstname, lastname, birth_date, email, password, phone_number, address, postal_code, city, country) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [firstname, lastname, birth_date, email, password, phone_number, address, postal_code, city, country]);
+queryAddNewUser : (firstname, lastname, birth_date, email, phone_number, address, postal_code, city, country, hashPassword) => {
+    return fantasia.query("insert into user (firstname, lastname, birth_date, email, phone_number, address, postal_code, city, country, hashPassword) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [firstname, lastname, birth_date, email, phone_number, address, postal_code, city, country, hashPassword]);
 },
 queryUpdateUser : (firstname, lastname, birth_date, password, phone_number, address, postal_code, city, country, email) => {
     return fantasia.query("UPDATE user SET firstname = ?, lastname = ?, birth_date = ?, password = ?, phone_number = ?, address = ?, postal_code = ?, city = ?, country = ? where email = ? ", [firstname, lastname, birth_date, password, phone_number, address, postal_code, city, country, email]);
