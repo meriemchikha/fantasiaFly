@@ -5,7 +5,6 @@ create table user(
     birth_date Date,
     email varchar(50),
     hashPassword varchar(50),
-   
     address varchar(50),
     postal_code varchar(50),
     city varchar(150),
@@ -90,7 +89,7 @@ VALUES
 ('2024-02-19', 180.85, 1), 
 ('2024-02-20', 100.00, 6), 
 ('2024-02-21', 160.45, 2),
-('2024-02-22', 130.20, 1), 
+('2024-02-22', 130.20, 1),
 ('2024-02-23', 220.75, 3) 
 
 create table period(

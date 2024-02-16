@@ -1,3 +1,4 @@
+const bookingModel = require("../models/bookingModel");
 const userModel = require("../models/userModel");
 
 const userController = {
@@ -24,6 +25,7 @@ const userController = {
           const { firstname, lastname, birth_date, email, phone_number, address, postal_code, city, country, hashPassword} = req.body;
           const [result] = await userModel.queryAddNewUser(firstname, lastname, birth_date, email,  phone_number, address, postal_code, city, country, hashPassword);
         if (!result.affectedRows) {
+          console.log(result.hashPassword);
       res.send("erreur lors de l'enregistrement de user ");
     } else {
       res.send("created");
@@ -78,6 +80,19 @@ const userController = {
 
       if (result != null) {
         res.json(result);
+      } else {
+        res.status(401).send("client n'existe pas avec cette reservation");
+      }
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  },
+  getAllBookingsByUser: async (req, res) => {
+    try {
+      const {id} = req.params;
+      const [bookings] = await userModel.queryGetAllBookingsByUser(id);
+      if (bookings != null) {
+        res.json(bookings);
       } else {
         res.status(401).send("client n'existe pas avec cette reservation");
       }

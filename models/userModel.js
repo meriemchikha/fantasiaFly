@@ -19,6 +19,20 @@ queryDeleteUser : (id) => {
   queryGetUserbokById: (id) => {
     return fantasia.query(`select u.id, u.firstname, u.lastname, u.city, b.booking_date, b.cancellation_insurance from user as u inner join booking as b on u.id = b.id where u.id= ${id}`);
   },
-}
+  queryGetAllBookingsByUser: (id) => {
+        return fantasia.query(`select u.id, u.firstname, u.lastname, u.email,
+         
+            JSON_ARRAYAGG(
+                JSON_OBJECT(
+            'destination', t.destination_name,
+            'booking_id', b.id,
+            'booking_date', b.booking_date,
+            'insurance_annulation', b.cancellation_insurance,
+            'quantity', p.quantity,
+            'total_price', p.quantity * p.unit_price
+                            ))
+                    as bookings from user as u join booking as b on u.id = b.id_user join payment as p on p.id = b.id_payment join travel as t on t.id = b.id_travel where u.id = ${id}`);
+                     
+}};
 
 module.exports = userModel;

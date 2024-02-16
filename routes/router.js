@@ -14,13 +14,16 @@ router.get("/users/:id", userController.getUserById);
 // router.post("/users", userController.addNewUser);
 router.put("/users", userController.updateUser);
 router.delete("/users/:id", userController.deleteUser);
+router.get("/users/:id/bookings", userController.getAllBookingsByUser);
 
 
 // route user pour hasher le mot de passe
 router.post("/users", hashPassword, userController.addNewUser);
  
 // creer les routes booking 
- router.get("/bookings", bookingController.getBooking)
+ router.get("/bookings", bookingController.getBooking);
+  router.post("/bookings", bookingController.addNewBooking);
+
 
 // creer les routes payment 
 router.get("/payments-bookings/:id", paymentController.getPaymentBookingById);
