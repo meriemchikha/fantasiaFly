@@ -58,18 +58,21 @@ create table travel(
     nb_of_total_seats INT
 );
 
-INSERT INTO travel (destination_name, destination_description, nb_of_total_seats)
+INSERT INTO travel (destination_name, country, nb_of_total_seats)
 VALUES
-('Paris Trip', 'Explore the beautiful city of Paris with its iconic landmarks.', 50),
-('Marseille Adventure', 'Discover the cultural richness of Marseille and its vibrant atmosphere.', 40),
-('Alps Excursion', 'Experience the breathtaking beauty of the Alps with this mountain adventure.', 30),
-('Côte d\Azur Getaway', 'Relax on the stunning beaches of the French Riviera.', 60),
-('Bordeaux Wine Tour', 'Indulge in the world-renowned wines of Bordeaux on this exquisite tour.', 35),
-('Lyon Culinary Experience', 'Savor the flavors of Lyon, the gastronomic capital of France.', 45),
-('Normandy Historical Tour', 'Immerse yourself in the rich history of Normandy and its historic landmarks.', 25),
-('Strasbourg Christmas Market', 'Enjoy the festive atmosphere of Strasbourg\s famous Christmas market.', 55),
-('Provence Lavender Fields', 'Wander through the picturesque lavender fields of Provence.', 20),
-('French Riviera Yachting', 'Luxuriate in the glamour of the French Riviera with a private yachting experience.', 15);
+('Poudlard', 'Scotland', 50),
+('Ifrane', 'Morocco', 40),
+('Astapor', 'Morocco', 30),
+('Twin Peaks', 'USA', 60),
+('Planète des Singes', 'Space', 35),
+('Anor Londo', 'Lordran', 1),
+('Astéroide B612', 'Space', 5),
+('Hopital psychiatrique Briarcliff', 'USA', 100),
+('Loompaland', 'Loompa (Pacific Ocean)', 28),
+('Westworld', 'USA', 15),
+('Plum Creek', 'USA', 40),
+('Fenêtre d/azur', 'Malta', 51),
+('Maison Picassiette', 'France', 35);
 
 create table payment(
     id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
